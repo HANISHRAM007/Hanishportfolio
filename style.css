@@ -199,6 +199,8 @@ code { background: var(--bg); box-shadow: var(--inset); padding: 2px 8px; border
 .cert { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .cert h3 { font-size: 1.05rem; }
 .cert .muted { font-size: .88rem; }
+.cert-links { margin-top: auto; padding-top: 6px; }
+.cert-links .btn { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
 
 /* ---------- Contact ---------- */
 .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: start; }
