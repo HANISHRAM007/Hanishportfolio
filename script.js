@@ -64,6 +64,34 @@
     $$('.reveal').forEach(el => el.classList.add('visible'));
   }
 
+  /* ---------- Subtle pointer magnification for the glass header ---------- */
+  const navBar = $('#navbar');
+  const navInner = $('.nav-inner', navBar);
+  if (navInner && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const navItems = $$('.logo, .nav-link', navInner);
+    navInner.addEventListener('pointermove', event => {
+      if (event.pointerType !== 'mouse' || window.matchMedia('(max-width: 960px)').matches) return;
+      const bounds = navInner.getBoundingClientRect();
+      navInner.style.setProperty('--nav-pointer-x', `${event.clientX - bounds.left}px`);
+      navInner.style.setProperty('--nav-pointer-y', `${event.clientY - bounds.top}px`);
+      navItems.forEach(item => {
+        const center = item.getBoundingClientRect().left + item.offsetWidth / 2;
+        const distance = Math.abs(event.clientX - center);
+        const influence = Math.exp(-Math.pow(distance / 74, 2) * .5);
+        item.style.setProperty('--nav-scale', (1 + influence * .16).toFixed(3));
+        item.style.setProperty('--nav-lift', `${influence * -4}px`);
+      });
+    });
+    navInner.addEventListener('pointerleave', () => {
+      navInner.style.removeProperty('--nav-pointer-x');
+      navInner.style.removeProperty('--nav-pointer-y');
+      navItems.forEach(item => {
+        item.style.setProperty('--nav-scale', '1');
+        item.style.setProperty('--nav-lift', '0px');
+      });
+    });
+  }
+
   /* ---------- Profile image fallback ---------- */
   const img = $('#profileImg');
   const frame = $('.photo-frame');
