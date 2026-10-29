@@ -1089,10 +1089,12 @@ body {
   color: var(--text);
   padding: 0 4.4%;
   background-image:
+    linear-gradient(rgba(0, 0, 0, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, .06) 1px, transparent 1px),
     radial-gradient(circle, rgba(0, 0, 0, .65) 1px, transparent 1.5px),
     radial-gradient(ellipse at 8% 8%, rgba(190, 42, 43, .75), transparent 30%),
     radial-gradient(ellipse at 92% 92%, rgba(178, 42, 39, .8), transparent 28%);
-  background-size: 18px 18px, auto, auto;
+  background-size: 36px 36px, 36px 36px, 18px 18px, auto, auto;
   background-attachment: fixed;
 }
 
