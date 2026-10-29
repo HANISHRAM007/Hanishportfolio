@@ -1501,3 +1501,53 @@ main {
     top: 70px;
   }
 }
+
+/* ---------- Aspect-ratio aware layout ---------- */
+/* Wide/short screens (laptops, landscape tablets): the 100vh hero is taller
+   than the viewport leaves room for, so size it to what's actually visible. */
+@media (orientation: landscape) and (max-aspect-ratio: 16/8), (max-height: 480px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding: 96px 0 48px;
+  }
+
+  .hero-inner {
+    gap: 30px;
+  }
+
+  .photo-frame {
+    width: min(220px, 34vh);
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+}
+
+/* Tall/narrow screens (phones in portrait, foldables): give the photo more
+   breathing room and tighten vertical rhythm so content needs less scrolling. */
+@media (orientation: portrait) and (max-aspect-ratio: 3/5) {
+  .hero {
+    padding-top: 80px;
+  }
+
+  .photo-frame {
+    width: min(260px, 70vw);
+  }
+
+  .hero-actions {
+    gap: 14px;
+  }
+}
+
+/* Ultra-wide monitors: cap content width growth and recentre so the layout
+   doesn't stretch into unreadable line lengths. */
+@media (min-aspect-ratio: 21/9) {
+  .container {
+    width: min(1280px, 86%);
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr .7fr;
+  }
+}
