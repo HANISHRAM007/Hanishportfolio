@@ -791,6 +791,21 @@ code {
   transform: none;
 }
 
+.theme-image-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 84px;
+  z-index: 90;
+  color: var(--accent);
+}
+
+@media (max-width: 520px) {
+  .theme-image-btn {
+    right: 16px;
+    bottom: 76px;
+  }
+}
+
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
