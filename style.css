@@ -1075,9 +1075,9 @@ code {
   --accent: #ff7655;
   --accent-2: #c83535;
   --radius: 17px;
-  --raised: none;
-  --raised-sm: none;
-  --inset: inset 0 0 0 1px #332c2a;
+  --raised: 9px 9px 20px var(--shadow-dark), -9px -9px 20px var(--shadow-light);
+  --raised-sm: 5px 5px 12px var(--shadow-dark), -5px -5px 12px var(--shadow-light);
+  --inset: inset 4px 4px 9px var(--shadow-dark), inset -4px -4px 9px var(--shadow-light);
 }
 
 html {
@@ -1130,20 +1130,20 @@ main {
 }
 
 .neu-card {
-  background: linear-gradient(145deg, #171313, #171717 54%, #211514);
-  border: 1px solid #37302e;
-  box-shadow: none;
+  background: var(--bg);
+  border: none;
+  box-shadow: var(--raised);
 }
 
 .neu-card:hover {
   transform: translateY(-3px);
-  border-color: #754038;
+  box-shadow: var(--raised), 0 0 0 1px rgba(255, 118, 85, .25);
 }
 
 .neu-btn {
-  background: #191919;
-  border: 1px solid #393130;
-  box-shadow: none;
+  background: var(--bg);
+  border: none;
+  box-shadow: var(--raised-sm);
 }
 
 .neu-btn.round {
@@ -1151,10 +1151,10 @@ main {
 }
 
 .btn {
-  background: #191919;
-  border: 1px solid #393130;
+  background: var(--bg);
+  border: none;
   color: var(--text);
-  box-shadow: none;
+  box-shadow: var(--raised-sm);
 }
 
 .btn-primary {
@@ -1174,17 +1174,17 @@ main {
 
 .chip,
 .badges span {
-  background: #1a1716;
-  box-shadow: none;
-  border: 1px solid #403330;
+  background: var(--bg);
+  box-shadow: var(--inset);
+  border: none;
   color: #f18a69;
 }
 
 .icon-badge,
 .project-icon {
-  background: #1a1716;
-  box-shadow: none;
-  border: 1px solid #403330;
+  background: var(--bg);
+  box-shadow: var(--inset);
+  border: none;
   color: var(--accent);
 }
 
@@ -1218,24 +1218,24 @@ main {
 }
 
 .photo-frame {
-  background: linear-gradient(145deg, #a22e30, #211718 75%);
-  border: 1px solid #69403b;
-  box-shadow: none;
+  background: var(--bg);
+  border: none;
+  box-shadow: var(--raised);
 }
 
 .photo-frame img {
-  box-shadow: none;
+  box-shadow: var(--inset);
 }
 
 .timeline::before {
-  width: 1px;
-  background: #63352e;
-  box-shadow: none;
+  width: 6px;
+  background: var(--bg);
+  box-shadow: var(--inset);
 }
 
 .timeline-item::before {
   background: var(--accent);
-  box-shadow: 0 0 0 5px var(--bg);
+  box-shadow: 0 0 0 5px var(--bg), var(--raised-sm);
 }
 
 .exp-project {
@@ -1244,8 +1244,8 @@ main {
 
 .field input,
 .field textarea {
-  background: #171717;
-  box-shadow: inset 0 0 0 1px #393130;
+  background: var(--bg);
+  box-shadow: var(--inset);
 }
 
 .footer {
