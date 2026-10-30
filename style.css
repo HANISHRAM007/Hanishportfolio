@@ -1473,11 +1473,10 @@ main {
     height: 70px;
     padding: 0 18px;
     gap: 16px;
-    justify-content: flex-start;
   }
 
   .nav-toggle {
-    order: -1;
+    margin-left: auto;
   }
 
   .nav-inner::before {
