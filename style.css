@@ -1475,7 +1475,12 @@ main {
     gap: 16px;
   }
 
+  .navbar nav {
+    flex: none;
+  }
+
   .nav-toggle {
+    order: 2;
     margin-left: auto;
   }
 
