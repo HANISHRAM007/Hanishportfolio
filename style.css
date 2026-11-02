@@ -178,6 +178,13 @@ code {
   transform: none;
 }
 
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none !important;
+}
+
 .btn-primary {
   color: var(--accent);
 }
@@ -747,6 +754,15 @@ code {
   margin-top: 14px;
   font-size: .9rem;
   color: var(--accent);
+  transition: all 0.3s ease;
+}
+
+.form-status.success {
+  color: #4ade80;
+}
+
+.form-status.error {
+  color: #ff8c9a;
 }
 
 .form-note {

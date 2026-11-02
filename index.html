@@ -419,7 +419,9 @@
               <textarea id="message" name="message" rows="5" required></textarea>
               <small class="error" id="messageError" role="alert"></small>
             </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
+            <!-- Spam protection honeypot -->
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+            <button type="submit" id="submitBtn" class="btn btn-primary">Send Message</button>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>

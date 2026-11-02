@@ -112,6 +112,7 @@
   /* ---------- Contact form validation ---------- */
   const form = $('#contactForm');
   const status = $('#formStatus');
+  const submitBtn = $('#submitBtn', form) || $('button[type="submit"]', form);
   const rules = {
     name:    v => v.trim().length >= 2 || 'Please enter your name.',
     email:   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || 'Please enter a valid email address.',
@@ -143,21 +144,75 @@
     });
   });
 
-  form.addEventListener('submit', e => {
+  /* ---------- Contact form submit (FormSubmit AJAX -> Inbox) ---------- */
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const allValid = Object.keys(rules).map(validateField).every(Boolean);
     if (!allValid) {
+      status.className = 'form-status error';
       status.textContent = 'Please fix the highlighted fields.';
       return;
     }
-    /* No backend yet: open the visitor's email app with the message pre-filled.
-       To send for real, replace this block with a fetch() to Formspree / Netlify Forms. */
+
+    // Bot honeypot check
+    if (form.elements['_honey'] && form.elements['_honey'].value) {
+      status.className = 'form-status success';
+      status.textContent = '✓ Thank you! Your message has been sent.';
+      form.reset();
+      return;
+    }
+
     const { name, email, subject, message } = form.elements;
-    const body = `${message.value}\n\n— ${name.value} (${email.value})`;
-    window.location.href = 'mailto:hanishrambalaji@gmail.com?subject=' +
-      encodeURIComponent(subject.value) + '&body=' + encodeURIComponent(body);
-    status.textContent = 'Opening your email app…';
-    form.reset();
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : 'Send Message';
+
+    // Show sending state
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+    }
+    status.className = 'form-status';
+    status.textContent = 'Sending message to inbox...';
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/hanishrambalaji@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name.value.trim(),
+          email: email.value.trim(),
+          subject: subject.value.trim(),
+          message: message.value.trim(),
+          _subject: `Portfolio Contact: ${subject.value.trim()} (from ${name.value.trim()})`,
+          _captcha: 'false',
+          _template: 'table'
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok) {
+        status.className = 'form-status success';
+        status.textContent = '✓ Thank you! Your message has been sent to my inbox.';
+        form.reset();
+        $$('.field', form).forEach(field => field.classList.remove('invalid'));
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    } catch (err) {
+      console.error('Contact form submission error:', err);
+      status.className = 'form-status error';
+      const mailtoUrl = 'mailto:hanishrambalaji@gmail.com?subject=' +
+        encodeURIComponent(subject.value) + '&body=' + encodeURIComponent(message.value + '\n\n— ' + name.value + ' (' + email.value + ')');
+      status.innerHTML = 'Unable to send automatically. <a href="' + mailtoUrl + '" style="text-decoration:underline;color:inherit;font-weight:600;">Click here to send via email client</a>.';
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
+      }
+    }
   });
 
   /* ---------- Theme from uploaded image ---------- */
