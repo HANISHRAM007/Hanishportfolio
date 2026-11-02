@@ -1650,25 +1650,23 @@ body.theme-purple {
   --raised-sm: 5px 5px 12px #04020a, -5px -5px 12px #18112a;
   --inset: inset 4px 4px 9px #04020a, inset -4px -4px 9px #18112a;
 
-  padding: 0;
   background-color: #06040b;
   color: var(--text);
   background-image:
     linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px),
     radial-gradient(circle, rgba(168, 85, 247, .28) 1px, transparent 1.5px),
-    radial-gradient(ellipse 70% 60% at 85% 35%, rgba(168, 85, 247, .55), transparent 65%),
-    radial-gradient(ellipse 55% 50% at 92% 58%, rgba(217, 70, 239, .38), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 12% 85%, rgba(126, 34, 206, .45), transparent 60%),
-    radial-gradient(ellipse 45% 45% at 15% 15%, rgba(147, 51, 234, .35), transparent 55%);
+    radial-gradient(ellipse 65% 55% at 88% 38%, rgba(168, 85, 247, .5), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 92% 58%, rgba(217, 70, 239, .32), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 8% 85%, rgba(126, 34, 206, .45), transparent 55%),
+    radial-gradient(ellipse 40% 40% at 10% 15%, rgba(147, 51, 234, .35), transparent 50%);
   background-size: 36px 36px, 36px 36px, 18px 18px, auto, auto, auto, auto;
   background-attachment: fixed;
 }
 
-/* Remove solid black slab from main so full background & glass shine through */
 body.theme-purple main {
-  background: transparent;
-  box-shadow: none;
+  background: #090712;
+  box-shadow: 0 0 100px rgba(0, 0, 0, .8), 0 0 50px rgba(168, 85, 247, .12);
 }
 
 body.theme-purple .section-title span {
@@ -1677,27 +1675,8 @@ body.theme-purple .section-title span {
   background-clip: text;
 }
 
-/* Glassy floating navbar in Cosmic Purple */
-body.theme-purple .nav-inner::before {
-  border: 1px solid rgba(168, 85, 247, .32);
-  background:
-    radial-gradient(150px circle at var(--nav-pointer-x, 50%) var(--nav-pointer-y, 0%), rgba(216, 180, 254, .25), transparent 80%),
-    linear-gradient(135deg, rgba(34, 20, 60, .38), rgba(16, 9, 30, .58));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 18px 50px rgba(0, 0, 0, .45), 0 0 28px rgba(168, 85, 247, .25);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  backdrop-filter: blur(24px) saturate(160%);
-}
-
-/* Ensure no solid black box behind nav links on desktop */
-body.theme-purple .navbar .nav-menu {
-  background: transparent !important;
-}
-
-body.theme-purple .navbar .nav-link,
 body.theme-purple .navbar .nav-link:hover,
 body.theme-purple .navbar .nav-link.active {
-  background: transparent !important;
-  box-shadow: none !important;
   color: #fff;
 }
 
@@ -1706,25 +1685,23 @@ body.theme-purple .navbar .nav-link::after {
   box-shadow: 0 0 8px #a855f7, 0 0 20px rgba(168, 85, 247, .85);
 }
 
-@media (max-width: 960px) {
-  body.theme-purple .navbar .nav-menu {
-    background: rgba(14, 10, 26, 0.96) !important;
-    border: 1px solid rgba(168, 85, 247, 0.25);
-    -webkit-backdrop-filter: blur(24px);
-    backdrop-filter: blur(24px);
-  }
+body.theme-purple .nav-inner::before {
+  border-color: rgba(168, 85, 247, .28);
+  background:
+    radial-gradient(150px circle at var(--nav-pointer-x, 50%) var(--nav-pointer-y, 0%), rgba(216, 180, 254, .2), transparent 80%),
+    linear-gradient(135deg, rgba(32, 22, 54, .6), rgba(16, 11, 28, .8));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 18px 50px rgba(0, 0, 0, .4), 0 0 25px rgba(168, 85, 247, .2);
 }
 
 body.theme-purple .neu-card {
-  background: rgba(14, 10, 26, 0.85);
-  border: 1px solid rgba(168, 85, 247, .16);
-  backdrop-filter: blur(14px);
+  background: #0e0a1c;
+  border: 1px solid rgba(168, 85, 247, .14);
   box-shadow: var(--raised);
 }
 
 body.theme-purple .neu-card:hover {
-  border-color: rgba(168, 85, 247, .45);
-  box-shadow: var(--raised), 0 0 24px rgba(168, 85, 247, .28);
+  border-color: rgba(168, 85, 247, .4);
+  box-shadow: var(--raised), 0 0 24px rgba(168, 85, 247, .25);
 }
 
 body.theme-purple .btn-primary {
@@ -1779,6 +1756,9 @@ body.theme-purple .photo-frame {
 }
 
 body.theme-purple .footer {
-  background: transparent;
-  border-top: 1px solid rgba(168, 85, 247, 0.12);
+  background: #06040b;
+}
+
+body.theme-purple .nav-menu {
+  background-color: #0f0a1c;
 }
