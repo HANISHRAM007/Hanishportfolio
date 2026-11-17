@@ -174,6 +174,11 @@
     status.textContent = 'Sending message to inbox...';
 
     try {
+      const userEmail = email.value.trim();
+      const userName = name.value.trim();
+      const userSubject = subject.value.trim();
+      const userMessage = message.value.trim();
+
       const response = await fetch('https://formsubmit.co/ajax/hanishrambalaji@gmail.com', {
         method: 'POST',
         headers: {
@@ -181,11 +186,12 @@
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          name: name.value.trim(),
-          email: email.value.trim(),
-          subject: subject.value.trim(),
-          message: message.value.trim(),
-          _subject: `Portfolio Contact: ${subject.value.trim()} (from ${name.value.trim()})`,
+          name: userName,
+          email: userEmail,
+          _replyto: userEmail,
+          subject: userSubject,
+          message: userMessage,
+          _subject: `New Portfolio Message from ${userName} (${userEmail}): ${userSubject}`,
           _captcha: 'false',
           _template: 'table'
         })
@@ -193,7 +199,7 @@
 
       const data = await response.json().catch(() => ({}));
 
-      if (response.ok) {
+      if (response.ok && (data.success === 'true' || data.success === true || response.status === 200)) {
         status.className = 'form-status success';
         status.textContent = '✓ Thank you! Your message has been sent to my inbox.';
         form.reset();
@@ -202,11 +208,19 @@
         throw new Error(data.message || 'Submission failed');
       }
     } catch (err) {
-      console.error('Contact form submission error:', err);
-      status.className = 'form-status error';
-      const mailtoUrl = 'mailto:hanishrambalaji@gmail.com?subject=' +
-        encodeURIComponent(subject.value) + '&body=' + encodeURIComponent(message.value + '\n\n— ' + name.value + ' (' + email.value + ')');
-      status.innerHTML = 'Unable to send automatically. <a href="' + mailtoUrl + '" style="text-decoration:underline;color:inherit;font-weight:600;">Click here to send via email client</a>.';
+      console.error('Contact form AJAX error, falling back:', err);
+      try {
+        const replyHidden = form.querySelector('#replyToHidden') || form.elements['_replyto'];
+        const subjHidden = form.querySelector('#subjectHidden') || form.elements['_subject'];
+        if (replyHidden) replyHidden.value = email.value.trim();
+        if (subjHidden) subjHidden.value = `Portfolio Contact from ${name.value.trim()} (${email.value.trim()}): ${subject.value.trim()}`;
+        form.submit();
+      } catch (nativeErr) {
+        status.className = 'form-status error';
+        const mailtoUrl = 'mailto:hanishrambalaji@gmail.com?subject=' +
+          encodeURIComponent(subject.value) + '&body=' + encodeURIComponent(message.value + '\n\n— ' + name.value + ' (' + email.value + ')');
+        status.innerHTML = 'Unable to send automatically. <a href="' + mailtoUrl + '" style="text-decoration:underline;color:inherit;font-weight:600;">Click here to send via email client</a>.';
+      }
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;

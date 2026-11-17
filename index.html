@@ -410,7 +410,7 @@
             </ul>
           </div>
 
-          <form id="contactForm" class="neu-card contact-form reveal" novalidate>
+          <form id="contactForm" class="neu-card contact-form reveal" action="https://formsubmit.co/hanishrambalaji@gmail.com" method="POST" novalidate>
             <div class="field">
               <label for="name">Name</label>
               <input type="text" id="name" name="name" autocomplete="name" required />
@@ -431,6 +431,11 @@
               <textarea id="message" name="message" rows="5" required></textarea>
               <small class="error" id="messageError" role="alert"></small>
             </div>
+            <!-- FormSubmit hidden configuration -->
+            <input type="hidden" name="_replyto" id="replyToHidden" />
+            <input type="hidden" name="_subject" id="subjectHidden" value="Portfolio Contact Message" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
             <!-- Spam protection honeypot -->
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
             <button type="submit" id="submitBtn" class="btn btn-primary">Send Message</button>
@@ -465,7 +470,7 @@
     <i class="fa-solid fa-file-arrow-down"></i>
   </a>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2.0"></script>
 </body>
 
 </html>
