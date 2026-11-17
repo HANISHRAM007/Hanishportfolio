@@ -217,18 +217,18 @@
 
   /* ---------- Theme toggle (Ember <-> Cosmic Purple) ---------- */
   const THEME_STORAGE_KEY = 'portfolio-theme-mode';
-  const themeToggleBtns = $$('#themeToggleBtn, #navThemeToggle, .theme-toggle-btn');
+  const themeToggleBtn = $('#themeToggleBtn');
 
   function updateThemeUI(isPurple) {
     document.body.classList.toggle('theme-purple', isPurple);
-    themeToggleBtns.forEach(btn => {
-      btn.setAttribute('aria-pressed', String(isPurple));
-      const icon = $('i', btn);
+    if (themeToggleBtn) {
+      themeToggleBtn.setAttribute('aria-pressed', String(isPurple));
+      const icon = $('i', themeToggleBtn);
       if (icon) {
         icon.className = isPurple ? 'fa-solid fa-fire-flame-curved' : 'fa-solid fa-wand-magic-sparkles';
       }
-      btn.setAttribute('title', isPurple ? 'Switch to Ember theme' : 'Switch to Cosmic Purple theme');
-    });
+      themeToggleBtn.setAttribute('title', isPurple ? 'Switch to Ember theme' : 'Switch to Cosmic Purple theme');
+    }
   }
 
   function toggleTheme() {
@@ -251,8 +251,8 @@
     updateThemeUI(false);
   }
 
-  themeToggleBtns.forEach(btn => {
-    btn.addEventListener('click', toggleTheme);
-  });
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', toggleTheme);
+  }
 
 })();
