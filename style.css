@@ -781,7 +781,9 @@ code {
 
 /* ---------- Footer & back-to-top ---------- */
 .footer {
-  padding: 34px 0;
+  padding: 36px 0 40px;
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .footer-inner {
@@ -1118,16 +1120,17 @@ body {
 }
 
 main {
-  width: min(1120px, 100%);
-  margin: 2px auto 0;
-  padding: 0 0 60px;
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  padding: 0;
   background: #101010;
   min-height: 100vh;
   box-shadow: 0 0 100px rgba(0, 0, 0, .3);
+  border-radius: 0 0 28px 28px;
 }
 
 .container {
-  width: min(900px, 92%);
+  width: min(1140px, 92%);
 }
 
 .section {
@@ -1270,7 +1273,7 @@ main {
 }
 
 .footer {
-  background: #101010;
+  background: transparent;
 }
 
 .nav-menu {
@@ -1732,6 +1735,7 @@ body.theme-purple {
 body.theme-purple main {
   background: #090712;
   box-shadow: 0 0 100px rgba(0, 0, 0, .8), 0 0 50px rgba(168, 85, 247, .12);
+  border-radius: 0 0 28px 28px;
 }
 
 body.theme-purple .section-title span {
@@ -1832,7 +1836,8 @@ body.theme-purple .photo-frame {
 }
 
 body.theme-purple .footer {
-  background: #06040b;
+  background: transparent;
+  border-top: 1px solid rgba(168, 85, 247, 0.16);
 }
 
 body.theme-purple .nav-menu {
