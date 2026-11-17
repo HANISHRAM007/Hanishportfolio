@@ -199,6 +199,22 @@
 
       const data = await response.json().catch(() => ({}));
 
+      // Check for one-time activation requirement from FormSubmit
+      if (data && data.message && (data.message.includes('needs Activation') || data.message.includes('Activate Form'))) {
+        status.className = 'form-status warning';
+        status.innerHTML = '📬 <strong>One-time activation required:</strong> FormSubmit has sent a confirmation email to <strong>hanishrambalaji@gmail.com</strong>. Please check your Gmail (including Spam/Promotions) and click <strong>"Activate Form"</strong> once. Future messages will arrive immediately!';
+        return;
+      }
+
+      // Check for file:// protocol restriction from FormSubmit
+      if (data && data.message && (data.message.includes('HTML files') || data.message.includes('web server'))) {
+        status.className = 'form-status warning';
+        const mailtoUrl = 'mailto:hanishrambalaji@gmail.com?subject=' +
+          encodeURIComponent(userSubject) + '&body=' + encodeURIComponent(userMessage + '\n\n— ' + userName + ' (' + userEmail + ')');
+        status.innerHTML = '⚠️ <strong>Local testing note:</strong> FormSubmit requires running via a web server (e.g. VS Code Live Server <code>http://localhost:...</code>) or deployed URL (GitHub Pages) rather than opening directly as <code>file:///</code>. <a href="' + mailtoUrl + '" style="text-decoration:underline;color:inherit;font-weight:600;">Click to send via email client</a>.';
+        return;
+      }
+
       if (response.ok && (data.success === 'true' || data.success === true || response.status === 200)) {
         status.className = 'form-status success';
         status.textContent = '✓ Thank you! Your message has been sent to my inbox.';
