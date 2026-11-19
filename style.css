@@ -819,8 +819,9 @@ code {
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity .7s ease, transform .7s ease;
+  transform: translateY(24px);
+  transition: opacity .5s cubic-bezier(0.16, 1, 0.3, 1), transform .5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
 }
 
 .reveal.visible {
@@ -1692,6 +1693,15 @@ body.theme-purple {
 
   background-color: #06040b;
   color: var(--text);
+}
+
+body.theme-purple::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #06040b;
   background-image:
     linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px),
@@ -1701,12 +1711,12 @@ body.theme-purple {
     radial-gradient(ellipse 55% 45% at 8% 85%, rgba(126, 34, 206, .45), transparent 55%),
     radial-gradient(ellipse 40% 40% at 10% 15%, rgba(147, 51, 234, .35), transparent 50%);
   background-size: 36px 36px, 36px 36px, 18px 18px, auto, auto, auto, auto;
-  background-attachment: fixed;
+  transform: translateZ(0);
 }
 
 body.theme-purple main {
   background: #090712;
-  box-shadow: 0 0 100px rgba(0, 0, 0, .8), 0 0 50px rgba(168, 85, 247, .12);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, .7), 0 0 35px rgba(168, 85, 247, .12);
   border-radius: 0 0 28px 28px;
 }
 
@@ -2277,11 +2287,20 @@ body.theme-particle {
   --raised-sm: 5px 5px 11px var(--shadow-dark), -4px -4px 10px var(--shadow-light);
   --inset: inset 4px 4px 9px var(--shadow-dark), inset -3px -3px 8px var(--shadow-light);
 
-  background: #060608;
-  background-image: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(123, 120, 255, .10), transparent 70%);
-  background-attachment: fixed;
+  background-color: #060608;
   color: var(--text);
   padding: 0;
+}
+
+body.theme-particle::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #060608;
+  background-image: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(123, 120, 255, .10), transparent 70%);
+  transform: translateZ(0);
 }
 
 body.theme-particle ::selection {
@@ -2622,14 +2641,16 @@ body.theme-particle .dock-btn[aria-pressed="true"] {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .04);
 }
 
-/* Pixel-stepped reveal animation */
+/* Smooth performant reveal animation */
 body.theme-particle .reveal {
-  transform: translateY(24px);
-  transition: opacity .6s steps(6, end), transform .6s steps(6, end);
+  transform: translateY(20px);
+  transition: opacity .45s cubic-bezier(0.16, 1, 0.3, 1), transform .45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
 }
 
 body.theme-particle .reveal.visible {
   transform: none;
+  opacity: 1;
 }
 
 /* Scroll rail */

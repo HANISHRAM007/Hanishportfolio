@@ -77,7 +77,7 @@
       });
     }, { threshold: 0.12 });
     $$('.reveal').forEach((el, i) => {
-      el.style.transitionDelay = (i % 4) * 80 + 'ms'; // small stagger
+      el.style.transitionDelay = (i % 3) * 40 + 'ms'; // subtle, non-blocking stagger
       revealer.observe(el);
     });
   } else {

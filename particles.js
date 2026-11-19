@@ -432,7 +432,7 @@
         }
         const yy = ((d.y + d.oy - scroll * 0.06 * d.s) % h + h) % h;
         const alpha = d.a * (still ? 1 : 0.6 + 0.4 * Math.sin(t * 1.4 + d.ph));
-        ctx.fillStyle = rgba(d.hot ? accent : base, alpha.toFixed(3));
+        ctx.fillStyle = rgba(d.hot ? accent : base, alpha);
         ctx.fillRect(d.x + d.ox, yy, d.s, d.s);
       }
       if (!still && !document.hidden) raf = requestAnimationFrame(draw);
