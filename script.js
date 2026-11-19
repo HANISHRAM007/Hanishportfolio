@@ -37,11 +37,31 @@
   /* ---------- Active nav link highlighting ---------- */
   const sections = $$('main section[id]');
   const links = $$('.nav-link');
+
+  /* Side scroll rail (visible in the Particle theme on wide screens) */
+  const rail = document.createElement('nav');
+  rail.className = 'scroll-rail';
+  rail.setAttribute('aria-label', 'Section progress');
+  sections.forEach(s => {
+    const title = $('.section-title', s);
+    const label = (title && title.dataset.label) || (s.id === 'home' ? 'Intro' : s.id);
+    const tick = document.createElement('a');
+    tick.href = '#' + s.id;
+    tick.className = 'rail-tick';
+    tick.dataset.target = s.id;
+    tick.setAttribute('aria-label', label);
+    tick.innerHTML = '<span>' + label + '</span>';
+    rail.appendChild(tick);
+  });
+  document.body.appendChild(rail);
+  const ticks = $$('.rail-tick', rail);
+
   if ('IntersectionObserver' in window) {
     const spy = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+          ticks.forEach(t => t.classList.toggle('active', t.dataset.target === entry.target.id));
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
@@ -245,44 +265,28 @@
     }
   });
 
-  /* ---------- Theme toggle (Ember <-> Cosmic Purple) ---------- */
+  /* ---------- Theme dock (Particle / Ember / Cosmic Purple) ---------- */
   const THEME_STORAGE_KEY = 'portfolio-theme-mode';
-  const themeToggleBtn = $('#themeToggleBtn');
+  const THEMES = { particle: '#060608', ember: '#101010', purple: '#0c0817' };
+  const themeMeta = $('meta[name="theme-color"]');
+  const dockButtons = $$('[data-theme-choice]');
 
-  function updateThemeUI(isPurple) {
-    document.body.classList.toggle('theme-purple', isPurple);
-    if (themeToggleBtn) {
-      themeToggleBtn.setAttribute('aria-pressed', String(isPurple));
-      const icon = $('i', themeToggleBtn);
-      if (icon) {
-        icon.className = isPurple ? 'fa-solid fa-fire-flame-curved' : 'fa-solid fa-wand-magic-sparkles';
-      }
-      themeToggleBtn.setAttribute('title', isPurple ? 'Switch to Ember theme' : 'Switch to Cosmic Purple theme');
+  function applyTheme(name, persist) {
+    if (!THEMES[name]) name = 'particle';
+    document.body.classList.toggle('theme-purple', name === 'purple');
+    document.body.classList.toggle('theme-particle', name === 'particle');
+    document.body.dataset.theme = name;
+    dockButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.themeChoice === name)));
+    if (themeMeta) themeMeta.setAttribute('content', THEMES[name]);
+    if (persist) {
+      try { localStorage.setItem(THEME_STORAGE_KEY, name); } catch (e) { /* storage blocked */ }
     }
+    window.dispatchEvent(new CustomEvent('themechange', { detail: name }));
   }
 
-  function toggleTheme() {
-    const isPurple = !document.body.classList.contains('theme-purple');
-    updateThemeUI(isPurple);
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, isPurple ? 'purple' : 'ember');
-    } catch (e) { /* ignore storage restrictions */ }
-  }
-
-  // Restore saved theme preference (default is current Ember theme)
-  try {
-    const saved = localStorage.getItem(THEME_STORAGE_KEY);
-    if (saved === 'purple') {
-      updateThemeUI(true);
-    } else {
-      updateThemeUI(false);
-    }
-  } catch (e) {
-    updateThemeUI(false);
-  }
-
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', toggleTheme);
-  }
+  let savedTheme = 'particle';
+  try { savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'particle'; } catch (e) { /* storage blocked */ }
+  applyTheme(savedTheme, false);
+  dockButtons.forEach(btn => btn.addEventListener('click', () => applyTheme(btn.dataset.themeChoice, true)));
 
 })();
