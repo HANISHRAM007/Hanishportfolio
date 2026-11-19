@@ -18,15 +18,21 @@
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=4.3" />
+  <link rel="stylesheet" href="style.css?v=4.5" />
 </head>
 
 <body>
   <!-- Apply the saved theme before first paint (avoids a flash of the wrong theme) -->
   <script>
     (function () {
-      var t = 'particle';
-      try { t = localStorage.getItem('portfolio-theme-mode') || 'particle'; } catch (e) { }
+      var stored = null;
+      try { stored = localStorage.getItem('portfolio-theme-mode'); } catch (e) { }
+      // Reset old 'ember' saves → particle (particle is now the default)
+      if (stored === 'ember') {
+        try { localStorage.setItem('portfolio-theme-mode', 'particle'); } catch (e) { }
+        stored = 'particle';
+      }
+      var t = stored || 'particle';
       if (t === 'purple') document.body.classList.add('theme-purple');
       else if (t === 'particle') document.body.classList.add('theme-particle');
     })();
@@ -69,11 +75,11 @@
         <div class="hero-text reveal">
           <p class="eyebrow">Hello, I'm</p>
           <h1>Hanish Ram B</h1>
-          <h2 class="role">Software Developer <span>|</span> Cloud &amp; AWS Solutions</h2>
+          <h2 class="role">Software Developer <span>|</span> Cloud &amp; AWS <span>|</span> AI &amp; Deep Learning</h2>
           <p class="hero-intro">
-            Software developer with nearly two years of experience building healthcare applications with Flutter and
-            .NET Core. I also architect secure, scalable cloud solutions on AWS, covering everything from the mobile
-            interface to the APIs to the infrastructure behind them
+            Software developer with nearly two years of experience building enterprise healthcare applications with Flutter and
+            .NET Core. I also architect secure, scalable cloud solutions on AWS and develop applied AI/deep learning models with
+            CNNs, computer vision, and modern LLM workflows.
           </p>
           <div class="hero-actions">
             <a href="#projects" class="btn btn-primary">View My Work</a>
@@ -94,14 +100,72 @@
         </div>
 
         <div class="hero-photo reveal">
-          <div class="photo-frame">
+          <div class="photo-wrapper">
+            <div class="photo-frame">
+              <img src="Hanish_photo.jpeg" alt="Portrait of Hanish Ram B" id="profileImg" width="320" height="400" />
+              <span class="photo-fallback" id="photoFallback" aria-hidden="true">HR</span>
+            </div>
 
-            <img src="Hanish_photo.jpeg" alt="Portrait of Hanish Ram B" id="profileImg" width="320" height="400" />
-            <span class="photo-fallback" id="photoFallback" aria-hidden="true">HR</span>
+            <!-- Floating animated tech badges filling empty space with motion -->
+            <div class="floating-badge badge-top-right float-slow">
+              <i class="fa-solid fa-brain"></i>
+              <div>
+                <strong>AI &amp; Deep Learning</strong>
+                <span>CNN &bull; VGG19 &bull; LLMs</span>
+              </div>
+            </div>
+
+            <div class="floating-badge badge-bottom-left float-reverse">
+              <i class="fa-brands fa-aws"></i>
+              <div>
+                <strong>AWS Cloud Solutions</strong>
+                <span>Certified Cloud Architect</span>
+              </div>
+            </div>
+
+            <div class="floating-badge badge-bottom-right float-delayed">
+              <i class="fa-solid fa-code"></i>
+              <div>
+                <strong>Flutter &amp; .NET Core</strong>
+                <span>Enterprise Healthcare Dev</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- ============ TECH TICKER MARQUEE ============ -->
+    <div class="tech-marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span><i class="fa-solid fa-brain"></i> AI &amp; Deep Learning</span>
+          <span><i class="fa-solid fa-network-wired"></i> Convolutional Neural Networks</span>
+          <span><i class="fa-solid fa-microchip"></i> VGG19 &amp; Computer Vision</span>
+          <span><i class="fa-brands fa-aws"></i> AWS Cloud Solutions</span>
+          <span><i class="fa-brands fa-flutter"></i> Flutter &amp; Dart</span>
+          <span><i class="fa-brands fa-microsoft"></i> .NET Core 8 &amp; C#</span>
+          <span><i class="fa-solid fa-server"></i> Serverless Lambda &amp; API Gateway</span>
+          <span><i class="fa-solid fa-database"></i> DynamoDB &amp; SQL Server</span>
+          <span><i class="fa-solid fa-robot"></i> LLM Integration &amp; Prompt Engineering</span>
+          <span><i class="fa-solid fa-shield-halved"></i> Well-Architected Framework</span>
+          <span><i class="fa-solid fa-chart-line"></i> Power BI &amp; Analytics</span>
+        </div>
+        <div class="marquee-group" aria-hidden="true">
+          <span><i class="fa-solid fa-brain"></i> AI &amp; Deep Learning</span>
+          <span><i class="fa-solid fa-network-wired"></i> Convolutional Neural Networks</span>
+          <span><i class="fa-solid fa-microchip"></i> VGG19 &amp; Computer Vision</span>
+          <span><i class="fa-brands fa-aws"></i> AWS Cloud Solutions</span>
+          <span><i class="fa-brands fa-flutter"></i> Flutter &amp; Dart</span>
+          <span><i class="fa-brands fa-microsoft"></i> .NET Core 8 &amp; C#</span>
+          <span><i class="fa-solid fa-server"></i> Serverless Lambda &amp; API Gateway</span>
+          <span><i class="fa-solid fa-database"></i> DynamoDB &amp; SQL Server</span>
+          <span><i class="fa-solid fa-robot"></i> LLM Integration &amp; Prompt Engineering</span>
+          <span><i class="fa-solid fa-shield-halved"></i> Well-Architected Framework</span>
+          <span><i class="fa-solid fa-chart-line"></i> Power BI &amp; Analytics</span>
+        </div>
+      </div>
+    </div>
 
     <!-- ============ ABOUT ============ -->
     <section id="about" class="section">
@@ -162,10 +226,11 @@
             <div class="badges">
               <span>Flutter</span><span>Dart</span><span>.NET Core</span><span>C#</span>
               <span>REST API Design</span><span>Dapper</span><span>SQL Server</span><span>PostgreSQL</span>
+              <span>State Management</span><span>Clean Architecture</span>
             </div>
           </article>
           <article class="neu-card reveal">
-            <h3><i class="fa-brands fa-aws"></i> AWS &amp; Cloud</h3>
+            <h3><i class="fa-brands fa-aws"></i> AWS &amp; Cloud Infrastructure</h3>
             <div class="badges">
               <span>EC2</span><span>VPC</span><span>Subnets / IGW / NAT</span><span>Security Groups</span>
               <span>Lambda</span><span>API Gateway</span><span>S3</span><span>DynamoDB</span>
@@ -173,31 +238,46 @@
             </div>
           </article>
           <article class="neu-card reveal">
-            <h3><i class="fa-solid fa-sitemap"></i> Architecture &amp; Frameworks</h3>
+            <h3><i class="fa-solid fa-brain"></i> AI Development &amp; Models</h3>
+            <div class="badges">
+              <span>Convolutional Neural Networks (CNN)</span>
+              <span>VGG19 Architecture</span>
+              <span>Computer Vision</span>
+              <span>Deep Learning</span>
+              <span>TensorFlow / Keras</span>
+              <span>PyTorch</span>
+              <span>OpenCV</span>
+              <span>Transfer Learning</span>
+              <span>Large Language Models (LLMs)</span>
+              <span>Prompt Engineering</span>
+              <span>Hugging Face</span>
+              <span>LangChain</span>
+              <span>Image Classification</span>
+              <span>Model Optimization</span>
+            </div>
+          </article>
+          <article class="neu-card reveal">
+            <h3><i class="fa-solid fa-sitemap"></i> Architecture &amp; System Design</h3>
             <div class="badges">
               <span>Well-Architected Framework</span><span>High Availability</span><span>Fault Tolerance</span>
               <span>Scalability</span><span>Multi-Tier Architecture</span><span>Least-Privilege IAM</span>
+              <span>Microservices Design</span><span>Event-Driven Architecture</span>
             </div>
           </article>
           <article class="neu-card reveal">
-            <h3><i class="fa-solid fa-shield-halved"></i> Cloud Practices</h3>
+            <h3><i class="fa-solid fa-shield-halved"></i> Cloud Security &amp; Practices</h3>
             <div class="badges">
-              <span>IaC Fundamentals</span><span>CI/CD Concepts</span><span>Secure SDLC</span>
-              <span>Application Security</span><span>Cost-aware Architecture</span><span>Disaster Recovery Basics</span>
+              <span>IaC Fundamentals</span><span>CI/CD Pipelines</span><span>Secure SDLC</span>
+              <span>Application Security</span><span>Cost-Aware Architecture</span><span>Disaster Recovery</span>
+              <span>Cloud Monitoring &amp; Metrics</span>
             </div>
           </article>
           <article class="neu-card reveal">
-            <h3><i class="fa-solid fa-screwdriver-wrench"></i> Tools &amp; Workflow</h3>
+            <h3><i class="fa-solid fa-screwdriver-wrench"></i> Tools, Data &amp; Platforms</h3>
             <div class="badges">
-              <span>Git</span><span>GitHub</span><span>GitLab</span><span>Jira</span><span>ServiceNow</span>
-              <span>Visual Studio</span><span>VS Code</span><span>Android Studio</span>
-            </div>
-          </article>
-          <article class="neu-card reveal">
-            <h3><i class="fa-solid fa-layer-group"></i> Other</h3>
-            <div class="badges">
-              <span>Python</span><span>Java</span><span>C</span><span>Power
-                BI</span><span>Firebase</span><span>OpenCV</span>
+              <span>Python</span><span>Java</span><span>Git &amp; GitHub</span><span>Visual Studio</span>
+              <span>VS Code</span><span>Android Studio</span><span>Power BI</span><span>Firebase</span>
+              <span>Jira</span><span>ServiceNow</span>
             </div>
           </article>
         </div>

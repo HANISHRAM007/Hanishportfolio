@@ -134,8 +134,8 @@
   const status = $('#formStatus');
   const submitBtn = $('#submitBtn', form) || $('button[type="submit"]', form);
   const rules = {
-    name:    v => v.trim().length >= 2 || 'Please enter your name.',
-    email:   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || 'Please enter a valid email address.',
+    name: v => v.trim().length >= 2 || 'Please enter your name.',
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || 'Please enter a valid email address.',
     subject: v => v.trim().length >= 3 || 'Please enter a subject.',
     message: v => v.trim().length >= 10 || 'Message should be at least 10 characters.'
   };
@@ -285,7 +285,16 @@
   }
 
   let savedTheme = 'particle';
-  try { savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'particle'; } catch (e) { /* storage blocked */ }
+  try {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    // Reset old 'ember' saves → particle (particle is now the default)
+    if (stored === 'ember') {
+      localStorage.setItem(THEME_STORAGE_KEY, 'particle');
+      savedTheme = 'particle';
+    } else {
+      savedTheme = stored || 'particle';
+    }
+  } catch (e) { /* storage blocked */ }
   applyTheme(savedTheme, false);
   dockButtons.forEach(btn => btn.addEventListener('click', () => applyTheme(btn.dataset.themeChoice, true)));
 
